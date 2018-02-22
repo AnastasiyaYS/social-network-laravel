@@ -17,10 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('users', 'HomeController@index')->name('users.index');
 
-Route::get('/search', 'SearchController@index')->name('search');
+Route::get('users/edit', 'HomeController@edit')->name('users.edit');
 
-Route::get('/friends', 'FriendsController@index')->name('friends');
+Route::get('search', 'SearchController@index')->name('search');
 
-Route::get('/messages', 'MessagesController@index')->name('messages');
+Route::get('friends', 'FriendsController@index')->name('friends');
+
+Route::get('messages', 'MessagesController@index')->name('messages');

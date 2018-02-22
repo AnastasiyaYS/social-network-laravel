@@ -12,14 +12,18 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/path/to/bootstrap.min.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+                @guest
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        {{ config('app.name', 'Laravel') }}
+                    </a>
+                @endguest
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -27,7 +31,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @guest
+                        @else
+                            <!-- Основное меню пользователя -->
+                            <li><a class="nav-link" href="{{ route('search') }}">Search for friends</a></li>
+                            <li><a class="nav-link" href="{{ route('friends') }}">My friends</a></li>
+                            <li><a class="nav-link" href="{{ route('messages') }}">Dialogs</a></li>
+                        @endguest
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -37,18 +47,13 @@
                             <li><a class="nav-link" href="{{ route('login') }}">Login</a></li>
                             <li><a class="nav-link" href="{{ route('register') }}">Register</a></li>
                         @else
-                            <!-- Основное меню пользователя -->
-                            <li><a class="nav-link" href="{{ route('search') }}">Search</a></li>
-                            <li><a class="nav-link" href="{{ route('friends') }}">Friends</a></li>
-                            <li><a class="nav-link" href="{{ route('messages') }}">Messages</a></li>
-
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->name }} <span cl ass="caret"></span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <!-- Кнопка моей страницы -->
-                                    <a class="dropdown-item" href="{{ route('home') }}">My page</a>
+                                    <a class="dropdown-item" href="{{ route('users.index') }}">My page</a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
