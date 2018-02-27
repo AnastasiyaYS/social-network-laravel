@@ -21,6 +21,8 @@ Route::get('users', 'HomeController@index')->name('users.index');
 
 Route::get('users/edit', 'HomeController@edit')->name('users.edit');
 
+Route::post('users/update', 'HomeController@update')->name('users.update');
+
 Route::get('search', 'SearchController@index')->name('search');
 
 Route::get('friends', 'FriendsController@index')->name('friends');
