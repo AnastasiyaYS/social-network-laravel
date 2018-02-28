@@ -18,8 +18,8 @@
                             @endif
 
                             <div class="col-md-4 offset-md-1 item text-center"><br>
-                                <h3>{{ $user->surname }} {{ $user->name }}</h3> <br>
-                                <p><img src="/uploads/avatars/{{$user->avatar}}" style="width:200px; height:200px;" class="img-fluid"></p>
+                                <h3>{{ $user->lastName }} {{ $user->name }}</h3> <br>
+                                <p><img src="/uploads/avatars/{{$userProfile->avatar}}" style="width:200px; height:200px;" class="img-fluid"></p>
 
                                 <div class="file_upload">
                                     <input type="file" name="avatar">
@@ -34,13 +34,13 @@
 
                                         <div class="radio col-md-4">
                                             <label>
-                                                <input class="form-control" type="radio" name="gender" id="gender1" value="male" {{ ($user->gender == 'male') ? 'checked' : '' }}>
+                                                <input class="form-control" type="radio" name="gender" id="gender1" value="male" {{ ($userProfile->gender == 'male') ? 'checked' : '' }}>
                                                 Male
                                             </label>
                                         </div>
                                         <div class="radio col-md-4">
                                             <label>
-                                                <input class="form-control" type="radio" name="gender" id="gender2" value="female" {{ ($user->gender == 'female') ? 'checked' : '' }}>
+                                                <input class="form-control" type="radio" name="gender" id="gender2" value="female" {{ ($userProfile->gender == 'female') ? 'checked' : '' }}>
                                                 Female
                                             </label>
                                         </div>
@@ -49,12 +49,12 @@
 
                                 <div class="form-group">
                                     <label for="inputBirthday"><strong>Birthday:</strong></label>
-                                    <input type="date" class="form-control" name="birthday" value="{{ $user->birthday }}">
+                                    <input type="date" class="form-control" name="birthday" value="{{ $userProfile->birthday }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputCity" class="control-label"><strong>City:</strong></label>
-                                    <input type="text" class="form-control" id="inputCity" name="city" value="{{ $user->city }}" >
+                                    <input type="text" class="form-control" id="inputCity" name="city" value="{{ $userProfile->city }}" >
                                 </div>
 
                                 <!-- Вывод всех университетов php -->

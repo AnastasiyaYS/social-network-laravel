@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\University;
+use App\UserProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Auth;
 use Image;
 
@@ -25,36 +28,49 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        return view('users.index', array('user' => Auth::user()));
-
+        $userProfile = DB::table('user_profiles')->where('user_id', Auth::id())->first();
+        return view('users.index', array('userProfile' => $userProfile, 'user' => Auth::user()));
     }
 
     public function edit()
     {
-        return view('users.edit', array('user' => Auth::user()));
+        $userProfile =  DB::table('user_profiles')->where('user_id', Auth::id())->first();
+        return view('users.edit', array('userProfile' => $userProfile, 'user' => Auth::user()));
     }
 
     public function update(Request $request)
     {
-        $user = Auth::user();
+        DB::table('user_profiles')
+            ->where('user_id', Auth::id())
+            ->update(['city' => $request->get('city'),
+
+            ]);
+        /*$userProfile = new UserProfile;
 
         if($request->hasFile('avatar')){
             $avatar = $request->file('avatar');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
             Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $filename));
 
-            $user->avatar = $filename;
-            $user->save();
+            $userProfile->avatar = $filename;
+            $userProfile->save();
         }
 
         if($request->all()) {
-            $user->fill($request->all());
-            //$user->save();
+            $userProfile->user_id = auth()->user()->id;
+            $userProfile->fill($request->all());
+            $userProfile->save();
         }
 
-        dd($request->all());
+        foreach ($request->get('university') as $u)
+        {
+            $userUniversity = new University();
+            $userUniversity->university_name = $u;
+            $userUniversity->save();
+        }   */
 
-        return redirect()->route('users.update');
+        //dd($request->all());
+
+        return redirect()->route('users.index');
     }
 }
