@@ -7,7 +7,9 @@
                 <div class="card card-default">
                     <div class="card-header">{{ $user->email }}</div>
 
-                    {!! Form::open(['route' => ['users.update'], 'method'=>'POST', 'files'=>'true']) !!}
+                    {!! Form::open(['route' => ['profile.update'], 'method'=>'POST', 'files'=>'true']) !!}
+
+                    @csrf
 
                         <div class="card-body row">
 
@@ -26,7 +28,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4 offset-md-2 item text-center"><br>
+                            <ul class="col-md-4 offset-md-2 item text-center"><br>
 
                                 <div class="form-group">    <!-- Бутстраповская форма - form-group, все элементы - form-control -->
                                     <div class="row">
@@ -58,19 +60,28 @@
                                 </div>
 
                                 <!-- Вывод всех университетов php -->
-                                <div class="form-group" id="divUni">
-                                    <label for="University"><strong>University:</strong></label>
-                                    <select class="form-control" name="university[]">
-                                        <option disabled selected>- not selected -</option>
-                                        <option {{ ($user->university == 'UlSU, Ulyanovsk State University') ? 'selected' : '' }}>UlSU, Ulyanovsk State University</option>
-                                        <option {{ ($user->university == 'UlSTU, Ulyanovsk State Technical University') ? 'selected' : '' }}>UlSTU, Ulyanovsk State Technical University</option>
-                                        <option {{ ($user->university == 'UlICA, Ulyanovsk Institute of Civil Aviation') ? 'selected' : '' }}>UlICA, Ulyanovsk Institute of Civil Aviation</option>
-                                        <option {{ ($user->university == 'UlSPU, Ulyanovsk State Pedagogical University') ? 'selected' : '' }}>UlSPU, Ulyanovsk State Pedagogical University</option>
-                                        <option {{ ($user->university == 'UlSAA, Ulyanovsk State Agricultural Academy') ? 'selected' : '' }}>UlSAA, Ulyanovsk State Agricultural Academy</option>
-                                    </select>
-                                </div>
+                                <p><strong>University:</strong><br>
+                                    @foreach($userUniversities as $u)
+                                        &#10004; {{ $u->university_name }}<br>
+                                        <!-- Удаление ссылкой -->
+                                        <a href="{{ route('university.destroy', $u->university_id) }}" class="btn btn-default">delete</a><br>
+                                    @endforeach
 
-                                <input type="button" class="btn btn-default" onclick="plus()" value="Add new university">
+                                    <div id="uniAdd">
+                                        <div id="uniCopy">
+                                            <div class="form-group" id="divUni">
+                                                <input class="form-control" name="university[]" list="university">
+                                                <datalist id="university">
+                                                    @foreach($universities as $u)
+                                                        <option> {{ $u->university_name }} </option>
+                                                    @endforeach;
+                                                </datalist>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p>
+
+                                <input type="button" class="btn btn-default" onclick="plus()" value="Add another university">
                                 <br><br>
                                 <input type="submit" class="btn btn-primary" value="Save changes">
                             </div>
@@ -78,15 +89,7 @@
 
                         <script>
                             function plus() {
-                                document.getElementById('divUni').innerHTML += '<br>' +
-                                        '<select class="form-control" name="university[]">' +
-                                        '<option disabled selected>- not selected -</option>' +
-                                        '<option {{ ($user->university == 'UlSU, Ulyanovsk State University') ? 'selected' : '' }}>UlSU, Ulyanovsk State University</option>' +
-                                        '<option {{ ($user->university == 'UlSTU, Ulyanovsk State Technical University') ? 'selected' : '' }}>UlSTU, Ulyanovsk State Technical University</option>' +
-                                        '<option {{ ($user->university == 'UlICA, Ulyanovsk Institute of Civil Aviation') ? 'selected' : '' }}>UlICA, Ulyanovsk Institute of Civil Aviation</option>' +
-                                        '<option {{ ($user->university == 'UlSPU, Ulyanovsk State Pedagogical University') ? 'selected' : '' }}>UlSPU, Ulyanovsk State Pedagogical University</option>' +
-                                        '<option {{ ($user->university == 'UlSAA, Ulyanovsk State Agricultural Academy') ? 'selected' : '' }}>UlSAA, Ulyanovsk State Agricultural Academy</option>' +
-                                        '<select>';
+                                document.getElementById('uniAdd').innerHTML += document.getElementById('uniCopy').innerHTML;
                             }
                         </script>
                     {!! Form::close() !!}

@@ -6,7 +6,7 @@ use App\University;
 use App\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Image;
 
 class HomeController extends Controller
@@ -28,49 +28,56 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $userProfile = DB::table('user_profiles')->where('user_id', Auth::id())->first();
-        return view('users.index', array('userProfile' => $userProfile, 'user' => Auth::user()));
+        $userData = new UserProfile();
+        $userUniversities = new University();
+        return view('profile.index', array('userUniversities' => $userUniversities->getUserUniversities(Auth::id()),
+            'userProfile' => $userData->getUserData(Auth::id()), 'user' => Auth::user()));
     }
 
     public function edit()
     {
-        $userProfile =  DB::table('user_profiles')->where('user_id', Auth::id())->first();
-        return view('users.edit', array('userProfile' => $userProfile, 'user' => Auth::user()));
+        $userData = new UserProfile();
+        $userUniversities = new University();
+        return view('profile.edit', array('universities' => $userUniversities->getAllUniversities(),
+            'userUniversities' => $userUniversities->getUserUniversities(Auth::id()),
+            'userProfile' => $userData->getUserData(Auth::id()), 'user' => Auth::user()));
     }
 
     public function update(Request $request)
     {
-        DB::table('user_profiles')
-            ->where('user_id', Auth::id())
-            ->update(['city' => $request->get('city'),
-
-            ]);
-        /*$userProfile = new UserProfile;
+        $userProfile = new UserProfile();
+        $userProfile->updateInfo(Auth::id(), $request);
 
         if($request->hasFile('avatar')){
             $avatar = $request->file('avatar');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
             Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $filename));
 
-            $userProfile->avatar = $filename;
-            $userProfile->save();
+            $userProfile->updateAvatar(Auth::id(), $filename);
         }
 
-        if($request->all()) {
-            $userProfile->user_id = auth()->user()->id;
-            $userProfile->fill($request->all());
-            $userProfile->save();
-        }
+        if($request->get('university'))
+            foreach ($request->get('university') as $received_university)
+            {
+                if ($received_university != null)
+                {
+                    $university = new University();
 
-        foreach ($request->get('university') as $u)
-        {
-            $userUniversity = new University();
-            $userUniversity->university_name = $u;
-            $userUniversity->save();
-        }   */
+                    if (!$university->exist($received_university))
+                    {
+                        $university->university_name = $received_university;
+                        $university->save();
 
-        //dd($request->all());
+                    }
+                    $university->saveUniversityRelations(Auth::id(), $received_university);
+                }
+            }
+        return redirect()->route('profile.index');
+    }
 
-        return redirect()->route('users.index');
+    public function universityDestroy($id){
+        $university = new University();
+        $university->deleteUserUniversity(Auth::id(), $id);
+        return redirect()->route('profile.edit');
     }
 }

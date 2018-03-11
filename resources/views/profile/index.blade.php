@@ -23,13 +23,19 @@
 
                         <div class="col-md-4 offset-md-2 item text-center">
                             <br>
-                            <p><strong>Gender: </strong> {{ $userProfile->gender or '-- ? --'}} <br></p>
-                            <p><strong>Birthday: </strong> {{ $userProfile->birthday or '-- ? --'}} <br></p>
-                            <p><strong>City: </strong> {{ $userProfile->city or '-- ? --'}} <br></p>
-                            <p><strong>University: </strong> {{ $user->university or '-- ? --'}} <br></p>
+                            <p><strong>Gender: </strong> {{ $userProfile->gender or 'unknown'}} <br></p>
+                            <p><strong>Birthday: </strong> {{ $userProfile->birthday or 'unknown' }} <br></p>
+                            <p><strong>City: </strong> {{ $userProfile->city or 'unknown'}} <br></p>
+
+                            <p><strong>University: </strong><br>
+                                @forelse($userUniversities as $u)
+                                    &#10004; {{ $u->university_name }} <br>
+                                @empty unknown <br>
+                                @endforelse
+                            </p>
                             <br>
 
-                            <a href="{{ route('users.edit') }}" class="btn btn-default">Edit</a>
+                            <a href="{{ route('profile.edit') }}" class="btn btn-default">Edit</a>
                         </div>
 
                     </div>

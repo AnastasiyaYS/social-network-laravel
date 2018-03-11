@@ -54,7 +54,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <!-- Кнопка моей страницы -->
-                                    <a class="dropdown-item" href="{{ route('users.index') }}">Profile</a>
+                                    <a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

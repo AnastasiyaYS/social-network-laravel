@@ -18,7 +18,7 @@ class CreateUniversityRelationsTable extends Migration
             $table->integer('university_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('profile')->onDelete('cascade');
             $table->foreign('university_id')->references('university_id')->on('universities')->onDelete('cascade');
         });
     }

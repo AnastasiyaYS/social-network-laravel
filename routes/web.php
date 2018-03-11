@@ -10,18 +10,22 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Middleware\CheckValueGender;
 
 Route::get('/', function () {
-    return view('welcome');
+    if(!Auth::id()) return view('welcome');
+    else return redirect()->route('profile.index');
 });
 
 Auth::routes();
 
-Route::get('users', 'HomeController@index')->name('users.index');
+Route::get('profile', 'HomeController@index')->name('profile.index');
 
-Route::get('users/edit', 'HomeController@edit')->name('users.edit');
+Route::get('profile/edit', 'HomeController@edit')->name('profile.edit');
 
-Route::post('users/update', 'HomeController@update')->name('users.update');
+Route::get('profile/edit/university/{id}/destroy', 'HomeController@universityDestroy')->name('university.destroy');
+
+Route::post('profile/update', 'HomeController@update')->name('profile.update')->middleware(CheckValueGender::class);
 
 Route::get('search', 'SearchController@index')->name('search');
 

@@ -12,8 +12,8 @@ class LoginController extends Controller
     | Login Controller
     |--------------------------------------------------------------------------
     |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your users screen. The controller uses a trait
+    | This controller handles authenticating profile for the application and
+    | redirecting them to your profile screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
     */
@@ -21,11 +21,11 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
+     * Where to redirect profile after login.
      *
      * @var string
      */
-    protected $redirectTo = '/users';
+    protected $redirectTo = '/profile';
 
     /**
      * Create a new controller instance.
