@@ -14,8 +14,14 @@ class UserProfile extends Model
 
     public function getUserData($id)
     {
-        $userData = DB::table('user_profiles')->where('user_id', $id)->first();
-        return $userData;
+        $foreignUserData = DB::table('users')
+            ->join('user_profiles', 'users.id', '=', 'user_profiles.user_id')
+            ->select('users.id', 'users.name', 'users.lastName', 'users.email',
+                'user_profiles.avatar', 'user_profiles.gender', 'user_profiles.birthday', 'user_profiles.city')
+            ->where('user_id', $id)
+            ->first();
+
+        return $foreignUserData;
     }
 
     public function updateInfo($id, $info)
@@ -36,4 +42,27 @@ class UserProfile extends Model
             ]);
     }
 
+    public function getAllUsers($parameters, $id)
+    {
+        if($parameters->searchName != null) $searchName = 'name';
+        else $searchName = 'id';
+
+        if($parameters->searchLastName != null) $searchLastName = 'lastName';
+        else $searchLastName = 'id';
+
+        if($parameters->searchCity != null) $searchCity = 'city';
+        else $searchCity = 'id';
+
+        $allUsers = DB::table('user_profiles')
+            ->join('users', 'users.id', '=', 'user_profiles.user_id')
+            ->select('users.id', 'users.name', 'users.lastName', 'user_profiles.avatar',
+                'user_profiles.birthday', 'user_profiles.city')
+            ->where([['id', '<>', $id],
+                [$searchName, 'like', '%'.$parameters->searchName.'%'],
+                [$searchLastName, 'like', '%'.$parameters->searchLastName.'%'],
+                [$searchCity, 'like', '%'.$parameters->searchCity.'%']])
+            ->paginate(5);
+
+        return $allUsers;
+    }
 }

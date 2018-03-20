@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card card-default">
-                    <div class="card-header">{{ $user->email }}</div>
+                    <div class="card-header">{{ $userProfile->email }}</div>
 
                     {!! Form::open(['route' => ['profile.update'], 'method'=>'POST', 'files'=>'true']) !!}
 
@@ -20,11 +20,11 @@
                             @endif
 
                             <div class="col-md-4 offset-md-1 item text-center"><br>
-                                <h3>{{ $user->lastName }} {{ $user->name }}</h3> <br>
+                                <h3>{{ $userProfile->lastName }} {{ $userProfile->name }}</h3> <br>
                                 <p><img src="/uploads/avatars/{{$userProfile->avatar}}" style="width:200px; height:200px;" class="img-fluid"></p>
-
                                 <div class="file_upload">
                                     <input type="file" name="avatar">
+                                    <div style="color: #f4595c">(Only for square photos)</div>
                                 </div>
                             </div>
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\University;
 use App\UserProfile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Image;
 
@@ -31,7 +30,7 @@ class HomeController extends Controller
         $userData = new UserProfile();
         $userUniversities = new University();
         return view('profile.index', array('userUniversities' => $userUniversities->getUserUniversities(Auth::id()),
-            'userProfile' => $userData->getUserData(Auth::id()), 'user' => Auth::user()));
+            'userProfile' => $userData->getUserData(Auth::id())));
     }
 
     public function edit()
@@ -40,7 +39,7 @@ class HomeController extends Controller
         $userUniversities = new University();
         return view('profile.edit', array('universities' => $userUniversities->getAllUniversities(),
             'userUniversities' => $userUniversities->getUserUniversities(Auth::id()),
-            'userProfile' => $userData->getUserData(Auth::id()), 'user' => Auth::user()));
+            'userProfile' => $userData->getUserData(Auth::id())));
     }
 
     public function update(Request $request)

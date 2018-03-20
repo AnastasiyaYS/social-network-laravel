@@ -29,6 +29,12 @@ Route::post('profile/update', 'HomeController@update')->name('profile.update')->
 
 Route::get('search', 'SearchController@index')->name('search');
 
+Route::post('search', 'SearchController@index')->name('search');
+
+Route::get('search/show_user/{id}', 'SearchController@show')->name('search.showUser');
+
+
+
 Route::get('friends', 'FriendsController@index')->name('friends');
 
 Route::get('messages', 'MessagesController@index')->name('messages');
