@@ -21,7 +21,7 @@
                                             Фамилия <br>
                                             Имя <br>
                                         </div>
-                                        <input type="button" class="btn btn-default" value="Add as Friend">
+                                        <a href="" class="btn btn-default" style="border: 3px solid #bfdeff; margin-bottom: 10px; width: 80%">Add as Friend</a>
                                     </div>
 
                                     <div class="col-md-3" style="margin: 0 15px; padding: 10px">
@@ -91,8 +91,17 @@
                                     </div>
 
                                     <div class="col-md-3 text-center">
-                                        <br><input type="button" class="btn btn-default" value="Add as Friend">
-                                        <br><a href="" class="btn btn-default">Write message</a>
+
+                                        <!-- Кнопка добавления в друзья или статус -->
+                                        @if (is_null($user->status))
+                                            <br><a href="{{ route('add_friend', $user->id) }}" class="btn btn-default" style="border: 3px solid #bfdeff; margin-bottom: 10px; width: 100%">Add as Friend</a>
+                                        @elseif ($user->status == 0)
+                                            <br><div style="margin-bottom: 10px; width: 100%; color: #c82333">Application sent</div>
+                                        @else
+                                            <br><div style="margin-bottom: 10px; width: 100%; color: #34ce57">Friend &#10004;</div>
+                                        @endif
+
+                                        <a href="" class="btn btn-default" style="border: 3px solid #bfdeff; width: 100%">Write message</a>
                                     </div>
                                 </div>
                             @empty <div align="center">Users not found</div><br>

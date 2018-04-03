@@ -33,8 +33,12 @@ Route::post('search', 'SearchController@index')->name('search');
 
 Route::get('search/show_user/{id}', 'SearchController@show')->name('search.showUser');
 
-
-
 Route::get('friends', 'FriendsController@index')->name('friends');
+
+Route::get('add_friend/{id}', 'FriendsController@add_friend')->name('add_friend');
+
+Route::get('confirm_friend/{id}', 'FriendsController@confirm_friend')->name('confirm_friend');
+
+
 
 Route::get('messages', 'MessagesController@index')->name('messages');

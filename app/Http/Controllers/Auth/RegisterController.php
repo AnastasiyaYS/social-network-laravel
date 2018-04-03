@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class RegisterController extends Controller
 {
@@ -35,6 +37,13 @@ class RegisterController extends Controller
         DB::table('user_profiles')->insert(
             ['avatar' => 'default.png', 'user_id' => Auth::id()]
         );
+
+        Schema::create(Auth::id().'_friends', function (Blueprint $table) {
+            $table->integer('friend_id')->unsigned();
+            $table->integer('status')->unsigned();
+
+            $table->foreign('friend_id')->references('id')->on('users')->onDelete('cascade');
+        });
 
         return '/';
     }

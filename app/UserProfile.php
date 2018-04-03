@@ -55,13 +55,14 @@ class UserProfile extends Model
 
         $allUsers = DB::table('user_profiles')
             ->join('users', 'users.id', '=', 'user_profiles.user_id')
+            ->leftjoin($id.'_friends', $id.'_friends.friend_id', '=', 'user_profiles.user_id')
             ->select('users.id', 'users.name', 'users.lastName', 'user_profiles.avatar',
-                'user_profiles.birthday', 'user_profiles.city')
+                'user_profiles.birthday', 'user_profiles.city', $id.'_friends.status')
             ->where([['id', '<>', $id],
                 [$searchName, 'like', '%'.$parameters->searchName.'%'],
                 [$searchLastName, 'like', '%'.$parameters->searchLastName.'%'],
                 [$searchCity, 'like', '%'.$parameters->searchCity.'%']])
-            ->paginate(5);
+            ->paginate(10);
 
         return $allUsers;
     }

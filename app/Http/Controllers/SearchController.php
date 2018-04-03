@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\UserProfile;
 use App\University;
+use App\Friend;
 use Illuminate\Support\Facades\Auth;
 
 class SearchController extends Controller
