@@ -15,32 +15,17 @@
                                 <div class="row justify-content-center text-center" style="margin: 15px 0 25px">
 
                                     <!-- php -->
-                                    <div class="col-md-3" style="margin: 0 15px; padding: 10px">
-                                        <img src="/uploads/avatars/{{$userProfile->avatar}}" style="width:140px; height:140px; border-radius:50%; margin: 5px 0 0;" class="img-fluid"><br>
-                                        <div style="margin: 5px">
-                                            Фамилия <br>
-                                            Имя <br>
+                                    @forelse ($possibleFriends as $possibleFriend)
+                                        <div class="col-md-3" style="margin: 0 15px; padding: 10px">
+                                            <img src="/uploads/avatars/{{$possibleFriend->avatar}}" style="width:140px; height:140px; border-radius:50%; margin: 5px 0 0;" class="img-fluid"><br>
+                                            <div style="margin: 5px">
+                                                {{ $possibleFriend->lastName }} <br>
+                                                {{ $possibleFriend->name }} <br>
+                                            </div>
+                                            <a href="{{ route('add_friend', $possibleFriend->user_id_2) }}" class="btn btn-default" style="border: 3px solid #bfdeff; margin-bottom: 10px; width: 80%">Add as Friend</a>
                                         </div>
-                                        <a href="" class="btn btn-default" style="border: 3px solid #bfdeff; margin-bottom: 10px; width: 80%">Add as Friend</a>
-                                    </div>
-
-                                    <div class="col-md-3" style="margin: 0 15px; padding: 10px">
-                                        <img src="/uploads/avatars/{{$userProfile->avatar}}" style="width:140px; height:140px; border-radius:50%; margin: 5px 0 0;" class="img-fluid"><br>
-                                        <div style="margin: 5px">
-                                            Фамилия <br>
-                                            Имя <br>
-                                        </div>
-                                        <input type="button" class="btn btn-default" value="Add as Friend">
-                                    </div>
-
-                                    <div class="col-md-3" style="margin: 0 15px; padding: 10px">
-                                        <img src="/uploads/avatars/{{$userProfile->avatar}}" style="width:140px; height:140px; border-radius:50%; margin: 5px 0 0;" class="img-fluid"><br>
-                                        <div style="margin: 5px">
-                                            Фамилия <br>
-                                            Имя <br>
-                                        </div>
-                                        <input type="button" class="btn btn-default" value="Add as Friend">
-                                    </div>
+                                    @empty <div align="center">Users not found</div><br>
+                                    @endforelse
 
                                 </div>
                             </div>

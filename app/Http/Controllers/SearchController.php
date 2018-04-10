@@ -18,8 +18,10 @@ class SearchController extends Controller
     public function index(Request $request)
     {
         $userData = new UserProfile();
+        $possibleFriend = new Friend();
         return view('search.index', array('userProfile' => $userData->getUserData(Auth::id()),
-            'allUsers' => $userData->getAllUsers($request, Auth::id()), 'search' => $request));
+            'allUsers' => $userData->getAllUsers($request, Auth::id()), 'search' => $request,
+            'possibleFriends' => $possibleFriend->getPossibleFriends(Auth::id())));
     }
 
     public function show($id)

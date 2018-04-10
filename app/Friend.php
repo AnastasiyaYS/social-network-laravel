@@ -63,5 +63,38 @@ class Friend extends Model
         DB::table($id_friend.'_friends')
             ->where('friend_id', $id)
             ->update(['friend_id' => $id, 'status' => 2]);
+
+        DB::table('friends')
+            ->insert([
+                ['user_id_1' => $id, 'user_id_2' => $id_friend],
+                ['user_id_1' => $id_friend, 'user_id_2' => $id]
+                ]);
+    }
+
+    public function getPossibleFriends($id_user)
+    {
+        $friends = DB::table('friends')
+            ->join('users', 'users.id', '=', 'friends.user_id_2')
+            ->join('user_profiles', 'user_profiles.user_id', '=', 'friends.user_id_2')
+            ->where('user_id_2', '<>', $id_user)
+            ->whereIn('user_id_1', function ($query) use ($id_user) {
+                return $query->select(DB::raw('friend_id'))
+                    ->from($id_user.'_friends')
+                    ->whereRaw('status', 2)
+                    ->get();
+            })
+            ->whereNotIn('user_id_2', function ($query) use ($id_user) {
+                return $query->select(DB::raw('friend_id'))
+                    ->from($id_user.'_friends')
+                    ->get();
+            })
+            ->select('user_id_2', DB::raw('count(*) as common_friends'), 'users.name', 'users.lastName', 'user_profiles.avatar')
+            ->groupby('user_id_2', 'avatar')
+            ->orderby('common_friends', 'desc')
+            ->limit(3)
+            ->inRandomOrder()
+            ->get();
+
+        return $friends;
     }
 }
