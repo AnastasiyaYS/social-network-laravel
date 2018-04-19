@@ -12,16 +12,25 @@ class UserProfile extends Model
         'gender', 'birthday', 'city',
     ];
 
-    public function getUserData($id)
+    public function getUserData($id_friend)
     {
         $foreignUserData = DB::table('users')
             ->join('user_profiles', 'users.id', '=', 'user_profiles.user_id')
             ->select('users.id', 'users.name', 'users.lastName', 'users.email',
-                'user_profiles.avatar', 'user_profiles.gender', 'user_profiles.birthday', 'user_profiles.city')
-            ->where('user_id', $id)
+                'user_profiles.avatar', 'user_profiles.gender', 'user_profiles.birthday',
+                'user_profiles.city')
+            ->where('user_id', $id_friend)
             ->first();
 
         return $foreignUserData;
+    }
+
+    public function getStatus($id_friend, $id_user)
+    {
+        return DB::table($id_user.'_friends')
+            ->select('status')
+            ->where('friend_id', $id_friend)
+            ->first();
     }
 
     public function updateInfo($id, $info)

@@ -23,7 +23,7 @@ Route::get('profile', 'HomeController@index')->name('profile.index');
 
 Route::get('profile/edit', 'HomeController@edit')->name('profile.edit');
 
-Route::get('profile/edit/university/{id}/destroy', 'HomeController@universityDestroy')->name('university.destroy');
+Route::get('university/{id}/destroy', 'HomeController@universityDestroy')->name('university.destroy');
 
 Route::post('profile/update', 'HomeController@update')->name('profile.update')->middleware(CheckValueGender::class);
 
@@ -38,6 +38,9 @@ Route::get('friends', 'FriendsController@index')->name('friends');
 Route::get('add_friend/{id}', 'FriendsController@add_friend')->name('add_friend');
 
 Route::get('confirm_friend/{id}', 'FriendsController@confirm_friend')->name('confirm_friend');
+
+Route::get('friend/{id}/remove', 'FriendsController@remove_from_friends')->name('friend.remove');
+
 
 
 

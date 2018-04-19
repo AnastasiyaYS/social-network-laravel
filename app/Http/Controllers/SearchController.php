@@ -30,6 +30,7 @@ class SearchController extends Controller
         $userUniversities = new University();
         return view('search.show_user', array('userProfile' => $userData->getUserData(Auth::id()),
             'foreignUserProfile' => $userData->getUserData($id),
-            'userUniversities' => $userUniversities->getUserUniversities($id)));
+            'userUniversities' => $userUniversities->getUserUniversities($id),
+            'userStatus' => $userData->getStatus($id, Auth::id())));
     }
 }

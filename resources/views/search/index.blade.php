@@ -18,11 +18,19 @@
                                     @forelse ($possibleFriends as $possibleFriend)
                                         <div class="col-md-3" style="margin: 0 15px; padding: 10px">
                                             <img src="/uploads/avatars/{{$possibleFriend->avatar}}" style="width:140px; height:140px; border-radius:50%; margin: 5px 0 0;" class="img-fluid"><br>
-                                            <div style="margin: 5px">
-                                                {{ $possibleFriend->lastName }} <br>
-                                                {{ $possibleFriend->name }} <br>
+                                            <div style="margin: 10px 0 5px">
+                                                <a href="{{ route('search.showUser', $possibleFriend->user_id) }}">
+                                                    {{ $possibleFriend->lastName }} <br>
+                                                    {{ $possibleFriend->name }}
+                                                </a>
                                             </div>
-                                            <a href="{{ route('add_friend', $possibleFriend->user_id_2) }}" class="btn btn-default" style="border: 3px solid #bfdeff; margin-bottom: 10px; width: 80%">Add as Friend</a>
+                                            <div style="margin-bottom: 10px;" >
+                                                @if (isset($possibleFriend->common_friends)) <small> Common friends: {{ $possibleFriend->common_friends }} </small>
+                                                @endif
+                                                @if (isset($possibleFriend->city)) <small> City: {{ $possibleFriend->city }} </small>
+                                                @endif
+                                            </div>
+                                            <a href="{{ route('add_friend', $possibleFriend->user_id) }}" class="btn btn-default" style="border: 3px solid #bfdeff; margin-bottom: 10px; width: 90%">Add as Friend</a>
                                         </div>
                                     @empty <div align="center">Users not found</div><br>
                                     @endforelse
@@ -79,11 +87,17 @@
 
                                         <!-- Кнопка добавления в друзья или статус -->
                                         @if (is_null($user->status))
-                                            <br><a href="{{ route('add_friend', $user->id) }}" class="btn btn-default" style="border: 3px solid #bfdeff; margin-bottom: 10px; width: 100%">Add as Friend</a>
+                                            <a href="{{ route('add_friend', $user->id) }}" class="btn btn-default" style="border: 3px solid #bfdeff; margin: 10px 0 10px; width: 100%">Add as Friend</a>
                                         @elseif ($user->status == 0)
-                                            <br><div style="margin-bottom: 10px; width: 100%; color: #c82333">Application sent</div>
+                                            <div style="width: 100%; color: #34ce57; margin: 10px 0 10px;">Application sent</div>
+                                            <a style="border: 3px solid #bfdeff; color: #c82333; width: 100%; margin-bottom: 10px;" href="{{ route('friend.remove', $user->id) }}" class="btn btn-default">Reject</a>
+                                        @elseif ($user->status == 1)
+                                            <div style="width: 100%; color: #34ce57; margin: 10px 0 10px;">Incoming application</div>
+                                            <a style="border: 3px solid #bfdeff; width: 100%; margin-bottom: 10px;" href="{{ route('confirm_friend', $user->id) }}" class="btn btn-default">Accept</a><br>
+                                            <a style="border: 3px solid #bfdeff; color: #c82333; width: 100%; margin-bottom: 10px;" href="{{ route('friend.remove', $user->id) }}" class="btn btn-default">Reject</a>
                                         @else
-                                            <br><div style="margin-bottom: 10px; width: 100%; color: #34ce57">Friend &#10004;</div>
+                                            <div style="width: 100%; color: #34ce57; margin: 10px 0 10px">Friend &#10004;</div>
+                                            <div ><a style="border: 3px solid #bfdeff; color: #c82333; width: 100%; margin-bottom: 10px;" href="{{ route('friend.remove', $user->id) }}" class="btn btn-default">Remove &#10007</a></div>
                                         @endif
 
                                         <a href="" class="btn btn-default" style="border: 3px solid #bfdeff; width: 100%">Write message</a>

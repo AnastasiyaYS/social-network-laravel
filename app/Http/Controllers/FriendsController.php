@@ -28,7 +28,7 @@ class FriendsController extends Controller
         $friend = new Friend();
         $friend->addFriend($id, Auth::id());
 
-        return redirect()->route('search');
+        return back();
     }
 
     public function confirm_friend($id)
@@ -36,7 +36,16 @@ class FriendsController extends Controller
         $friend = new Friend;
         $friend->confirmFriend($id, Auth::id());
 
-        return redirect()->route('friends');
+        return back();
     }
+
+    public function remove_from_friends($id)
+    {
+        $friend = new Friend;
+        $friend->destroyFriend($id, Auth::id());
+
+        return back();
+    }
+
 }
 

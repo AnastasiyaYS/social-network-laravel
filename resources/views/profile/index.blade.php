@@ -34,7 +34,7 @@
                                 @endforelse
                             </p>
                             <br>
-                            <a href="{{ route('profile.edit') }}" class="btn btn-default">Edit</a>
+                            <a href="{{ route('profile.edit') }}" style="border: 3px solid #bfdeff; width: 70%" class="btn btn-default">Edit</a>
                         </div>
 
                     </div>
