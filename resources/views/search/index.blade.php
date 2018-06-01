@@ -17,13 +17,13 @@
                                     <!-- php -->
                                     @forelse ($possibleFriends as $possibleFriend)
                                         <div class="col-md-3" style="margin: 0 15px; padding: 10px">
-                                            <img src="/uploads/avatars/{{$possibleFriend->avatar}}" style="width:140px; height:140px; border-radius:50%; margin: 5px 0 0;" class="img-fluid"><br>
-                                            <div style="margin: 10px 0 5px">
-                                                <a href="{{ route('search.showUser', $possibleFriend->user_id) }}">
+                                            <a href="{{ route('search.showUser', $possibleFriend->user_id) }}">
+                                                <img src="/uploads/avatars/{{$possibleFriend->avatar}}" style="width:140px; height:140px; border-radius:50%; margin: 5px 0 0;" class="img-fluid"><br>
+                                                <div style="margin: 10px 0 5px">
                                                     {{ $possibleFriend->lastName }} <br>
                                                     {{ $possibleFriend->name }}
-                                                </a>
-                                            </div>
+                                                </div>
+                                            </a>
                                             <div style="margin-bottom: 10px;" >
                                                 @if (isset($possibleFriend->common_friends)) <small> Common friends: {{ $possibleFriend->common_friends }} </small>
                                                 @endif
@@ -74,7 +74,9 @@
                             @forelse ($allUsers as $user)
                                 <div class="row justify-content-center" style="padding: 15px 0; border-top: 1px solid #d8d8d8">
                                     <div class="col-md-4 text-center">
-                                        <img src="/uploads/avatars/{{$user->avatar}}" style="width:140px; height:140px; border-radius:50%;" class="img-fluid">
+                                        <a href="{{ route('search.showUser', $user->id) }}">
+                                            <img src="/uploads/avatars/{{$user->avatar}}" style="width:140px; height:140px; border-radius:50%;" class="img-fluid">
+                                        </a>
                                     </div>
 
                                     <div class="col-md-4">
@@ -100,7 +102,7 @@
                                             <div ><a style="border: 3px solid #bfdeff; color: #c82333; width: 100%; margin-bottom: 10px;" href="{{ route('friend.remove', $user->id) }}" class="btn btn-default">Remove &#10007</a></div>
                                         @endif
 
-                                        <a href="" class="btn btn-default" style="border: 3px solid #bfdeff; width: 100%">Write message</a>
+                                        <a href="{{ route('dialog', $user->id) }}" class="btn btn-default" style="border: 3px solid #bfdeff; width: 100%">Write message</a>
                                     </div>
                                 </div>
                             @empty <div align="center">Users not found</div><br>

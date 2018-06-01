@@ -43,7 +43,7 @@
                                 <div style="width: 100%; color: #34ce57; margin: 10px 0 10px">Friend &#10004;</div>
                                 <a style="border: 3px solid #bfdeff; color: #c82333; width: 80%; margin-bottom: 10px;" href="{{ route('friend.remove', $foreignUserProfile->id) }}" class="btn btn-default">Remove &#10007</a>
                             @endif
-                            <a href="" class="btn btn-default" style="border: 3px solid #bfdeff; width: 80%; margin-bottom: 40px;">Write message</a>
+                            <a href="{{ route('dialog', $foreignUserProfile->id) }}" class="btn btn-default" style="border: 3px solid #bfdeff; width: 80%; margin-bottom: 40px;">Write message</a>
 
                         </div>
 

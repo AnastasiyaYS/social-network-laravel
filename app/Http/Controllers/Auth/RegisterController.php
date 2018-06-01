@@ -45,6 +45,17 @@ class RegisterController extends Controller
             $table->foreign('friend_id')->references('id')->on('users')->onDelete('cascade');
         });
 
+        Schema::create(Auth::id().'_messages', function (Blueprint $table) {
+            $table->increments('message_id');
+            $table->integer('chat_id')->unsigned();
+            $table->integer('sender_id')->unsigned();
+            $table->text('text');
+            $table->string('file')->nullable();
+            $table->string('orig_file_name')->nullable();
+            $table->integer('status')->unsigned();
+            $table->timestamps();
+        });
+
         return '/';
     }
 
